@@ -13,29 +13,46 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <gtk-3.0/gtk/gtk.h>
-#include <glib-2.0/gio/gapplication.h>
+#include <GL/glew.h>
+#include <GL/glut.h>
 
-static void activate(GtkApplication* app, gpointer user_data)
+static int make_resources(void)
 {
-    GtkWidget *window;
+    return 1;
+}
 
-    window = gtk_application_window_new(app);
-    gtk_window_set_title(GTK_WINDOW(window), "Window");
-    gtk_window_set_default_size(GTK_WINDOW (window), 200, 200);
-    gtk_widget_show_all(window);
+static void update_fade_factor(void)
+{
+    
+}
+
+static void render(void)
+{
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glutSwapBuffers();
 }
 
 int main(int argc, char** argv)
 {
-    GtkApplication *app;
-    int status;
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
+    glutInitWindowSize(400, 300);
+    glutCreateWindow("Hello World");
+    glutDisplayFunc(&render);
+    glutIdleFunc(&update_fade_factor);
+    
+    glewInit();
+    if (!GLEW_VERSION_2_0) {
+        fprintf(stderr, "OpenGL 2.0 not available\n");
+        return 1;
+    }
+    
+    if (!make_resources()) {
+        fprintf(stderr, "Failed to load resources\n");
+    }
 
-    app = gtk_application_new("org.gtk.example", G_APPLICATION_FLAGS_NONE);
-    g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
-    status = g_application_run(G_APPLICATION(app), argc, argv);
-    g_object_unref(app);
-
-    return (status);
+    glutMainLoop();
+    return 0;
 }
 
