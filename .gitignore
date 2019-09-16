@@ -1,2 +1,6 @@
 /build
 /dist
+/cmake-build-debug
+/util.o
+/main.o
+/main
