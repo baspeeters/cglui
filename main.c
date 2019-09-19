@@ -21,7 +21,7 @@
 
 #include "util.h"
 
-static struct {
+struct g_resources_struct {
     GLuint vertex_buffer, element_buffer;
     GLuint vertex_shader, fragment_shader, program;
 
@@ -34,7 +34,10 @@ static struct {
     } attributes;
 
     GLfloat fade_factor;
-} g_resources;
+};
+
+struct g_resources_struct g_resources;
+
 
 static GLuint make_buffer(
         GLenum target,
@@ -117,11 +120,49 @@ static const GLfloat g_vertex_buffer_data[] = {
 };
 static const GLushort g_element_buffer_data[] = {0, 1, 2, 3};
 
+struct square_dimensions {
+    GLfloat width;
+    GLfloat height;
+
+    struct {
+        GLfloat x;
+        GLfloat y;
+    } position;
+};
+
+struct Square {
+    struct square_dimensions dimensions;
+    float square_vertex_buffer_data[8];
+};
+
+struct Square make_square(
+        GLfloat width,
+        GLfloat height,
+        GLfloat x,
+        GLfloat y
+) {
+    struct Square s = {width, height, x, y,
+            x, y,
+            x + width, y,
+            x, y - height,
+            x + width, y - height,
+    };
+
+    return s;
+}
+
 static int make_resources(void) {
+    struct Square s1 = make_square(0.01f, 0.55f, -0.75f, 0.9f);
+
     g_resources.vertex_buffer = make_buffer(
             GL_ARRAY_BUFFER,
             g_vertex_buffer_data,
             sizeof(g_vertex_buffer_data)
+    );
+    g_resources.vertex_buffer = make_buffer(
+            GL_ARRAY_BUFFER,
+            s1.square_vertex_buffer_data,
+            sizeof(s1.square_vertex_buffer_data)
     );
     g_resources.element_buffer = make_buffer(
             GL_ELEMENT_ARRAY_BUFFER,
