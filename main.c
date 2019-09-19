@@ -131,14 +131,14 @@ static int make_resources(void) {
 
     g_resources.vertex_shader = make_shader(
             GL_VERTEX_SHADER,
-            "shaders/hello-gl.v.glsl"
+            "shaders/simple.v.glsl"
     );
     if (g_resources.vertex_shader == 0)
         return 0;
 
     g_resources.fragment_shader = make_shader(
             GL_FRAGMENT_SHADER,
-            "shaders/hello-gl.f.glsl"
+            "shaders/simple.f.glsl"
     );
     if (g_resources.fragment_shader == 0)
         return 0;
