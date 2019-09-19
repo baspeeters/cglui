@@ -110,10 +110,10 @@ static GLuint make_program(GLuint vertex_shader, GLuint fragment_shader) {
 }
 
 static const GLfloat g_vertex_buffer_data[] = {
-         -0.5f,  0.5f,  0.0f,
-          0.5f,  0.5f,  0.0f,
-          0.5f, -0.5f,  0.0f,
-         -0.5f, -0.5f,  0.0f,
+         -0.5f,  0.5f,
+          0.5f,  0.5f,
+          0.5f, -0.5f,
+         -0.5f, -0.5f,
 };
 static const GLushort g_element_buffer_data[] = {0, 1, 2, 3};
 
@@ -151,7 +151,6 @@ static int make_resources(void) {
         return 0;
 
     g_resources.uniforms.fade_factor = glGetUniformLocation(g_resources.program, "fade_factor");
-
     g_resources.attributes.position = glGetAttribLocation(g_resources.program, "position");
 
     return 1;
@@ -171,7 +170,7 @@ static void render(void) {
     glBindBuffer(GL_ARRAY_BUFFER, g_resources.vertex_buffer);
     glVertexAttribPointer(
             g_resources.attributes.position,
-            3,
+            2,
             GL_FLOAT,
             GL_FALSE,
             0,
