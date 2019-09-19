@@ -112,12 +112,6 @@ static GLuint make_program(GLuint vertex_shader, GLuint fragment_shader) {
     return program;
 }
 
-static const GLfloat g_vertex_buffer_data[] = {
-         -0.5f,  0.5f,
-          0.5f,  0.5f,
-          0.5f, -0.5f,
-         -0.5f, -0.5f,
-};
 static const GLushort g_element_buffer_data[] = {0, 1, 2, 3};
 
 struct dimensions {
@@ -154,11 +148,6 @@ struct Rect make_rect(
 static int make_resources(void) {
     struct Rect s1 = make_rect(0.01f, 0.55f, -0.75f, 0.9f);
 
-    g_resources.vertex_buffer = make_buffer(
-            GL_ARRAY_BUFFER,
-            g_vertex_buffer_data,
-            sizeof(g_vertex_buffer_data)
-    );
     g_resources.vertex_buffer = make_buffer(
             GL_ARRAY_BUFFER,
             s1.vertex_buffer_data,
