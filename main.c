@@ -120,7 +120,7 @@ static const GLfloat g_vertex_buffer_data[] = {
 };
 static const GLushort g_element_buffer_data[] = {0, 1, 2, 3};
 
-struct square_dimensions {
+struct dimensions {
     GLfloat width;
     GLfloat height;
 
@@ -130,21 +130,21 @@ struct square_dimensions {
     } position;
 };
 
-struct Square {
-    struct square_dimensions dimensions;
-    float square_vertex_buffer_data[8];
+struct Rect {
+    struct dimensions dimensions;
+    float vertex_buffer_data[8];
 };
 
-struct Square make_square(
+struct Rect make_rect(
         GLfloat width,
         GLfloat height,
         GLfloat x,
         GLfloat y
 ) {
-    struct Square s = {width, height, x, y,
-            x, y,
+    struct Rect s = {width, height, x, y,
+                     x, y,
             x + width, y,
-            x, y - height,
+                     x, y - height,
             x + width, y - height,
     };
 
@@ -152,7 +152,7 @@ struct Square make_square(
 }
 
 static int make_resources(void) {
-    struct Square s1 = make_square(0.01f, 0.55f, -0.75f, 0.9f);
+    struct Rect s1 = make_rect(0.01f, 0.55f, -0.75f, 0.9f);
 
     g_resources.vertex_buffer = make_buffer(
             GL_ARRAY_BUFFER,
@@ -161,8 +161,8 @@ static int make_resources(void) {
     );
     g_resources.vertex_buffer = make_buffer(
             GL_ARRAY_BUFFER,
-            s1.square_vertex_buffer_data,
-            sizeof(s1.square_vertex_buffer_data)
+            s1.vertex_buffer_data,
+            sizeof(s1.vertex_buffer_data)
     );
     g_resources.element_buffer = make_buffer(
             GL_ELEMENT_ARRAY_BUFFER,
